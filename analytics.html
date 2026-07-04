@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - AK Energy Consultant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .stat-card { transition: transform 0.2s; }
+        .stat-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 to-slate-800 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl p-6 mb-8 border border-white/20">
+            <div class="flex justify-between items-center flex-wrap gap-4">
+                <div>
+                    <h1 class="text-4xl font-bold text-white mb-2">
+                        <i class="fas fa-chart-line text-cyan-400"></i> Analytics Dashboard
+                    </h1>
+                    <p class="text-gray-300">Real-time visitor tracking from Google Sheets</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm text-gray-400">Last Updated</div>
+                    <div class="text-white font-mono" id="lastUpdate">Loading...</div>
+                    <button onclick="loadData()" class="mt-2 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="bg-white/10 backdrop-blur-md rounded-xl p-12 text-center border border-white/20">
+            <i class="fas fa-spinner fa-spin text-5xl text-cyan-400 mb-4"></i>
+            <p class="text-white text-xl">Loading analytics data from Google Sheets...</p>
+        </div>
+
+        <!-- Main Content (Hidden until loaded) -->
+        <div id="mainContent" class="hidden">
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="stat-card bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl shadow-xl p-6 border border-white/20">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-blue-200 text-sm font-medium">Total Visits</p>
+                            <p class="text-4xl font-bold text-white mt-2" id="totalVisits">0</p>
+                        </div>
+                        <i class="fas fa-eye text-4xl text-white/30"></i>
+                    </div>
+                </div>
+
+                <div class="stat-card bg-gradient-to-br from-green-600 to-green-800 rounded-xl shadow-xl p-6 border border-white/20">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-green-200 text-sm font-medium">Unique Visitors</p>
+                            <p class="text-4xl font-bold text-white mt-2" id="uniqueVisitors">0</p>
+                        </div>
+                        <i class="fas fa-users text-4xl text-white/30"></i>
+                    </div>
+                </div>
+
+                <div class="stat-card bg-gradient-to-br from-purple-600 to-purple-800 rounded-xl shadow-xl p-6 border border-white/20">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-purple-200 text-sm font-medium">Countries</p>
+                            <p class="text-4xl font-bold text-white mt-2" id="totalCountries">0</p>
+                        </div>
+                        <i class="fas fa-globe text-4xl text-white/30"></i>
+                    </div>
+                </div>
+
+                <div class="stat-card bg-gradient-to-br from-orange-600 to-orange-800 rounded-xl shadow-xl p-6 border border-white/20">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-orange-200 text-sm font-medium">Avg Time</p>
+                            <p class="text-4xl font-bold text-white mt-2" id="avgTime">0s</p>
+                        </div>
+                        <i class="fas fa-clock text-4xl text-white/30"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="bg-white/10 backdrop-blur-md rounded-xl shadow-xl p-6 mb-8 border border-white/20">
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="exportToCSV()" class="px-6 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition">
+                        <i class="fas fa-download mr-2"></i> Export CSV
+                    </button>
+                    <button onclick="filterToday()" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                        <i class="fas fa-calendar-day mr-2"></i> Today Only
+                    </button>
+                    <button onclick="showAllData()" class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+                        <i class="fas fa-list mr-2"></i> Show All
+                    </button>
+                    <a href="https://docs.google.com/spreadsheets/d/1F3aSqJTqGl0aKD5oyu6IFUD1ykZnbCSOYEh_iIIb0hA/edit" target="_blank" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        <i class="fas fa-external-link-alt mr-2"></i> Open Google Sheet
+                    </a>
+                </div>
+            </div>
+
+            <!-- Top Countries -->
+            <div class="bg-white/10 backdrop-blur-md rounded-xl shadow-xl p-6 mb-8 border border-white/20">
+                <h2 class="text-2xl font-bold text-white mb-4">
+                    <i class="fas fa-map-marked-alt text-cyan-400"></i> Top Countries
+                </h2>
+                <div id="topCountries" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+            </div>
+
+            <!-- Visitor Table -->
+            <div class="bg-white/10 backdrop-blur-md rounded-xl shadow-xl overflow-hidden border border-white/20">
+                <div class="p-6 border-b border-white/20">
+                    <h2 class="text-2xl font-bold text-white">Visitor Log</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-white/5">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-cyan-400">Time</th>
+                                <th class="px-6 py-4 text-left text-cyan-400">IP</th>
+                                <th class="px-6 py-4 text-left text-cyan-400">Location</th>
+                                <th class="px-6 py-4 text-left text-cyan-400">Device</th>
+                                <th class="px-6 py-4 text-left text-cyan-400">Browser</th>
+                                <th class="px-6 py-4 text-left text-cyan-400">Page</th>
+                            </tr>
+                        </thead>
+                        <tbody id="visitorTable" class="divide-y divide-white/10"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwfSphaxGLWoQmV4z6nLNejjqFF8vWku2wLImZldN0JGCFwdzzYsZSVGv2-CNkaE6Gh/exec';
+        let allData = [];
+        let filteredData = [];
+
+        async function loadData() {
+            try {
+                const response = await fetch(GOOGLE_SHEETS_URL);
+                const data = await response.json();
+                
+                allData = data;
+                filteredData = [...allData];
+                
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('mainContent').classList.remove('hidden');
+                
+                displayData();
+                updateLastUpdate();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('loadingState').innerHTML = `
+                    <i class="fas fa-exclamation-triangle text-5xl text-red-400 mb-4"></i>
+                    <p class="text-white text-xl">Error loading data. Please try again.</p>
+                    <button onclick="loadData()" class="mt-4 px-6 py-3 bg-cyan-600 text-white rounded-lg">Retry</button>
+                `;
+            }
+        }
+
+        function displayData() {
+            const data = filteredData;
+            
+            document.getElementById('totalVisits').textContent = data.length;
+            document.getElementById('uniqueVisitors').textContent = new Set(data.map(d => d.ip_address)).size;
+            document.getElementById('totalCountries').textContent = new Set(data.map(d => d.country)).size;
+            
+            const avgTime = data.reduce((sum, d) => sum + (parseInt(d.time_on_page) || 0), 0) / (data.length || 1);
+            document.getElementById('avgTime').textContent = Math.round(avgTime) + 's';
+
+            // Top countries
+            const countries = {};
+            data.forEach(d => {
+                if (d.country && d.country !== 'Unknown') {
+                    countries[d.country] = (countries[d.country] || 0) + 1;
+                }
+            });
+            
+            const topCountries = Object.entries(countries)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 6);
+            
+            document.getElementById('topCountries').innerHTML = topCountries.map(([country, count]) => `
+                <div class="bg-white/5 p-4 rounded-lg">
+                    <div class="flex justify-between items-center">
+                        <span class="text-white font-medium">${country}</span>
+                        <span class="text-cyan-400 font-bold">${count}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Visitor table
+            const tbody = document.getElementById('visitorTable');
+            tbody.innerHTML = data.slice().reverse().map(v => `
+                <tr class="hover:bg-white/5">
+                    <td class="px-6 py-4 text-gray-300 text-sm">${new Date(v.timestamp).toLocaleString()}</td>
+                    <td class="px-6 py-4 text-gray-300 font-mono text-sm">${v.ip_address || 'N/A'}</td>
+                    <td class="px-6 py-4 text-gray-300 text-sm">${v.city || 'Unknown'}, ${v.country || 'Unknown'}</td>
+                    <td class="px-6 py-4 text-gray-300 text-sm">${v.device_type || 'Unknown'}</td>
+                    <td class="px-6 py-4 text-gray-300 text-sm">${v.browser_name || 'Unknown'}</td>
+                    <td class="px-6 py-4 text-gray-300 text-sm">${v.page_title || 'N/A'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function exportToCSV() {
+            const headers = Object.keys(filteredData[0] || {});
+            const csv = [
+                headers.join(','),
+                ...filteredData.map(row => headers.map(h => `"${row[h] || ''}"`).join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `analytics_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function filterToday() {
+            const today = new Date().toDateString();
+            filteredData = allData.filter(d => new Date(d.timestamp).toDateString() === today);
+            displayData();
+        }
+
+        function showAllData() {
+            filteredData = [...allData];
+            displayData();
+        }
+
+        function updateLastUpdate() {
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+        }
+
+        setInterval(loadData, 30000); // Auto-refresh every 30 seconds
+        loadData(); // Initial load
+    </script>
+</body>
+</html>

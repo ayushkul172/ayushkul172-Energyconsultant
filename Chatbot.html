@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK Energy Consultant - AI Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f8f9fa;
+            margin: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-questions {
+            padding: 15px;
+            background: #e3f2fd;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            background: #1976D2;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-btn:hover {
+            background: #1565C0;
+            transform: translateY(-2px);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: white;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-content {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.bot .message-content {
+            background: #f1f3f5;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user .message-content {
+            background: #667eea;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .message.bot .message-avatar {
+            background: #667eea;
+            color: white;
+        }
+
+        .message.user .message-avatar {
+            background: #28a745;
+            color: white;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: #f1f3f5;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            max-width: 80px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #666;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            background: #5a6fd8;
+            transform: scale(1.05);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .send-btn.sending {
+            background: #28a745;
+        }
+
+        .preformatted {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 10px;
+                height: calc(100vh - 140px);
+            }
+
+            .quick-questions {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .quick-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .message-content {
+                max-width: 90%;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AK Energy Consultant</h1>
+        <p>Upstream Oil & Gas Analysis • Python Automation • Market Intelligence</p>
+    </div>
+
+    <div class="chat-container">
+        <div class="quick-questions">
+            <button class="quick-btn" onclick="sendQuickQuestion('Tell me about his education')">
+                📚 Education
+            </button>
+            <button class="quick-btn" onclick="sendQuickQuestion('What is his upstream expertise?')">
+                🛢️ Upstream Expertise
+            </button>
+            <button class="quick-btn" onclick="sendQuickQuestion('Show me his experience')">
+                💼 Experience
+            </button>
+            <button class="quick-btn" onclick="sendQuickQuestion('What are his technical skills?')">
+                💻 Technical Skills
+            </button>
+            <button class="quick-btn" onclick="sendQuickQuestion('Tell me about his projects')">
+                🔥 Projects
+            </button>
+            <button class="quick-btn" onclick="sendQuickQuestion('How can I contact him?')">
+                📞 Contact
+            </button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <div class="message-content preformatted" id="initialMessage">Hello! I'm Ayush Kulshrestha's AI assistant.
+
+I'm an Energy Consultant & Data Scientist specializing in AI-driven analytics that deliver 90%+ efficiency gains. My flagship achievements include:
+🔥 Upstream AI Analyzer: 90% time reduction + 100% automation
+🔥 Data Matcher Tool: 95% accuracy improvement
+🔥 Research Synthesizer: 75% faster data gathering
+
+I bridge engineering, business, and data science to transform complex energy challenges into competitive advantages.
+
+Ready to explore how I can revolutionize your energy data workflows?</div>
+                    <div class="message-time" id="initialTime"></div>
+                </div>
+            </div>
+            
+            <div class="message bot" style="display: none;" id="typingIndicator">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="typing-indicator">
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                    <span style="font-size: 11px; margin-left: 8px;">AK is typing...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <input 
+                type="text" 
+                class="input-field" 
+                id="messageInput" 
+                placeholder="Ask about Ayush's expertise..."
+                onkeypress="handleKeyPress(event)"
+            />
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Knowledge base - exact conversion from Python
+        const knowledgeBase = {
+            education: {
+                mba: 'MBA in Marketing & International Business from Galgotias College of Engineering & Technology (2018-2020)',
+                btech: 'B.Tech in Mechanical Engineering from Maharshi Dayanand University (2013-2017)',
+                certs: 'Lean Six Sigma (KPMG), Google Digital Marketing, IBM AI & Generative AI, Python Essential Training (LinkedIn), Business Analysis (IIBA), ADBI certifications in Digital Economy and Urban Growth',
+                details: 'This unique combination of engineering technical depth and business strategic thinking enables bridging complex technical challenges with commercial solutions in the energy sector.'
+            },
+            experience: {
+                current: 'Wood Mackenzie, Gurugram (2024-Present) - Upstream Production Analyst: Spearheading advanced upstream intelligence, integrating geospatial analytics (ArcGIS) and AI-driven automation to streamline subsea contract forecasting.',
+                kpmg: 'KPMG Global Services, Gurugram (2022-2024) - Business Associate (Energy & Natural Resources): Created Power BI dashboards, conducted benchmarking studies, developed VBA/Python solutions, pioneered generative AI integration.',
+                acs: 'ACS Global Tech Solutions, Noida (2020-2022) - Market Research Associate: Specialized in IT applications in industrial manufacturing, conducted competitive analysis, created thought leadership content.',
+                continental: 'Continental Automotive Components, Gurugram (2019) - Trainee: Gained practical insights into manufacturing operations and quality control procedures.'
+            },
+            upstream_expertise: {
+                technical: 'Reservoir management, rig performance analysis, subsea development, drilling operations, production optimization, well completion techniques, field development planning',
+                subsea: 'SURF (Subsea, Umbilicals, Risers, Flowlines), subsea production systems, subsea processing, tie-back developments, subsea field architecture, contract analysis',
+                market: 'Supply/demand forecasting, market dynamics analysis, pricing mechanisms, contractor performance evaluation, global upstream activities, investment flows',
+                operations: 'Drilling programs, completion strategies, production forecasting, enhanced oil recovery, unconventional resource development, field optimization',
+                contracts: 'Drilling contracts, service agreements, joint venture structures, farm-in/farm-out deals, equipment procurement contracts'
+            },
+            projects: {
+                analyzer: 'Upstream AI Analyzer Tool: 90% reduction in manual analysis time, 100% automation of intelligence gathering, 1-click deployment with PyQt5, Selenium, spaCy',
+                matcher: 'AI Data Matcher Tool: 95% improvement in matching accuracy, 80% reduction in reconciliation time, Random Forest ML integration',
+                synthesizer: 'Automated Research Synthesizer: 75% reduction in data gathering, 4x increase in sources analyzed, OpenAI API + LangChain integration',
+                command: 'Project Command Center: AI-powered analytics, ML delay prediction, 30%+ productivity increase with linear programming optimization',
+                pipeline: 'AI News Intelligence Pipeline: 90% processing time reduction, Microsoft Copilot integration, real-time intelligence delivery'
+            },
+            technical_skills: {
+                programming: 'Python (PyQt5, Selenium, spaCy, scikit-learn, pandas), VBA (expert level), JavaScript, HTML5, CSS3',
+                ai_ml: 'Random Forest classifiers, NLP processing, OpenAI API, LangChain, generative AI tools, continuous learning algorithms',
+                databases: 'Refinitiv, FactSet, Bloomberg, GlobalData, Zoominfo, database optimization, spatial data analysis',
+                visualization: 'Power BI (advanced dashboards), ArcGIS (geospatial analytics), matplotlib, custom visualizations'
+            },
+            contact: {
+                email: 'ayushkul404@yahoo.com',
+                phone: '+91 8851222155',
+                website: 'www.akenergyconsultant.org',
+                location: 'Gurugram, India (serving clients globally)'
+            }
+        };
+
+        // Initialize
+        let isTyping = false;
+        document.getElementById('initialTime').textContent = getCurrentTime();
+
+        function getCurrentTime() {
+            return new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
+        function getResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            
+            // Education queries (highest priority)
+            if (containsAny(message, ['education', 'qualification', 'degree', 'study', 'university', 'his education', 'your education', 'know his education'])) {
+                return `🎓 Ayush's Educational Background:
+
+**${knowledgeBase.education.mba}**
+Strategic business perspective, international market understanding, and commercial acumen for energy consulting.
+
+**${knowledgeBase.education.btech}**
+Technical foundation in mechanical systems, thermodynamics, fluid mechanics - crucial for upstream oil & gas operations.
+
+**Professional Certifications:**
+${knowledgeBase.education.certs}
+
+${knowledgeBase.education.details}`;
+            }
+            
+            // Experience queries
+            if (containsAny(message, ['experience', 'work history', 'career', 'background', 'his experience', 'your experience'])) {
+                return `💼 Ayush's Professional Experience:
+
+**Current Role (2024-Present):**
+${knowledgeBase.experience.current}
+
+**KPMG (2022-2024):**
+${knowledgeBase.experience.kpmg}
+
+**ACS Global Tech (2020-2022):**
+${knowledgeBase.experience.acs}
+
+**Continental Automotive (2019):**
+${knowledgeBase.experience.continental}
+
+Career progression from manufacturing to market research to specialized upstream analysis, developing comprehensive expertise across the energy value chain.`;
+            }
+            
+            // Upstream expertise queries
+            if (containsAny(message, ['upstream', 'oil', 'gas', 'expertise', 'knowledge', 'subsea', 'reservoir'])) {
+                return `🛢️ Comprehensive Upstream Expertise:
+
+**Technical Operations:** ${knowledgeBase.upstream_expertise.technical}
+
+**Subsea Systems:** ${knowledgeBase.upstream_expertise.subsea}
+
+**Market Intelligence:** ${knowledgeBase.upstream_expertise.market}
+
+**Operations Analysis:** ${knowledgeBase.upstream_expertise.operations}
+
+**Contract Expertise:** ${knowledgeBase.upstream_expertise.contracts}
+
+At Wood Mackenzie, I apply this expertise daily, analyzing global upstream projects worth billions of dollars, providing strategic intelligence that influences major investment decisions.`;
+            }
+            
+            // Technical skills queries
+            if (containsAny(message, ['technical', 'skills', 'programming', 'python', 'ai', 'his skills', 'your skills'])) {
+                return `💻 Technical Skills & Expertise:
+
+**Programming:** ${knowledgeBase.technical_skills.programming}
+
+**AI & Machine Learning:** ${knowledgeBase.technical_skills.ai_ml}
+
+**Databases:** ${knowledgeBase.technical_skills.databases}
+
+**Visualization:** ${knowledgeBase.technical_skills.visualization}
+
+**Real Applications:**
+• 90% time savings in news processing
+• 95% accuracy in data matching
+• Fully automated intelligence pipelines serving global energy clients
+• 30%+ productivity improvements through AI-powered solutions`;
+            }
+            
+            // Project queries
+            if (containsAny(message, ['projects', 'portfolio', 'tools', 'applications', 'case studies'])) {
+                return `🔥 Flagship AI-Powered Projects:
+
+**${knowledgeBase.projects.analyzer}**
+
+**${knowledgeBase.projects.matcher}**
+
+**${knowledgeBase.projects.synthesizer}**
+
+**${knowledgeBase.projects.command}**
+
+**${knowledgeBase.projects.pipeline}**
+
+All projects feature advanced ML integration, intuitive interfaces, and measurable business impact. Which project interests you most?`;
+            }
+            
+            // Contact queries
+            if (containsAny(message, ['contact', 'email', 'phone', 'reach', 'connect'])) {
+                return `📞 Contact Information:
+
+**Email:** ${knowledgeBase.contact.email}
+**Phone:** ${knowledgeBase.contact.phone}
+**Website:** ${knowledgeBase.contact.website}
+**Location:** ${knowledgeBase.contact.location}
+
+**Response Time:** Within 24 hours
+**Free Consultation:** Available to discuss your automation and analytics needs
+
+Ready to transform your energy data challenges into competitive advantages? Let's connect!`;
+            }
+            
+            // Pricing queries
+            if (containsAny(message, ['price', 'cost', 'rate', 'fee', 'investment'])) {
+                return `💰 Consulting Investment Structure:
+
+**🔥 AI Automation Projects:** Custom development of desktop applications - project-based pricing with ROI guarantees
+
+**📊 Dashboard & Analytics:** Power BI dashboard creation and ArcGIS integration - fixed packages
+
+**📈 Strategic Consulting:** Upstream market analysis and competitive positioning - hourly or monthly retainer
+
+**🎯 Training & Implementation:** Team training on AI tools and methodologies
+
+**Typical ROI:** 75-90% time savings, 95%+ accuracy improvements
+
+Let's discuss your specific challenge for a detailed proposal with guaranteed measurable results.`;
+            }
+            
+            // Greeting responses
+            if (containsAny(message, ['hello', 'hi', 'hey', 'greetings'])) {
+                return `Hello! Great to connect with you! 🚀
+
+I'm Ayush Kulshrestha - an Energy Consultant & Data Scientist who transforms complex energy challenges into AI-powered competitive advantages.
+
+**What makes me unique?**
+• 90%+ efficiency gains through intelligent automation
+• Real-world AI applications with measurable ROI
+• Bridge between engineering, business & data science
+
+**Ready to explore:**
+• Upstream market intelligence & automation
+• AI-powered desktop applications  
+• Strategic consulting & competitive positioning
+• Power BI dashboards & geospatial analytics
+
+What specific challenge can I help you solve?`;
+            }
+            
+            // Default response
+            return `That's a great question! I'm Ayush Kulshrestha - specializing in AI-driven energy analytics that deliver measurable competitive advantages.
+
+🔥 **Core Expertise:**
+• Upstream market intelligence with 90%+ efficiency gains
+• AI-powered desktop applications with ML integration
+• Strategic consulting bridging engineering, business & data science
+• Power BI dashboards with ArcGIS geospatial analytics
+
+**Feel free to ask about:**
+• My educational background (MBA + B.Tech)
+• Work experience (Wood Mackenzie, KPMG)
+• Upstream oil & gas expertise
+• Technical skills and AI projects
+• How I can optimize your energy data workflows
+
+I transform complex data challenges into streamlined, intelligent solutions!`;
+        }
+
+        function containsAny(text, keywords) {
+            return keywords.some(keyword => text.includes(keyword));
+        }
+
+        function addMessage(sender, content, isUser = false) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const time = getCurrentTime();
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas ${isUser ? 'fa-user' : 'fa-robot'}"></i>
+                </div>
+                <div>
+                    <div class="message-content preformatted">${content}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+            `;
+            
+            // Insert before typing indicator
+            const typingIndicator = document.getElementById('typingIndicator');
+            messagesContainer.insertBefore(messageDiv, typingIndicator);
+            
+            scrollToBottom();
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').style.display = 'flex';
+            scrollToBottom();
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        function scrollToBottom() {
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const message = input.value.trim();
+            
+            if (!message || isTyping) return;
+            
+            // Add user message
+            addMessage('You', message, true);
+            input.value = '';
+            
+            // Start typing simulation
+            isTyping = true;
+            sendBtn.disabled = true;
+            sendBtn.className = 'send-btn sending';
+            sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            
+            showTyping();
+            
+            // Simulate processing time
+            setTimeout(() => {
+                hideTyping();
+                const response = getResponse(message);
+                addMessage('AK', response, false);
+                
+                // Reset button
+                isTyping = false;
+                sendBtn.disabled = false;
+                sendBtn.className = 'send-btn';
+                sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
+                
+                input.focus();
+            }, 1500); // 1.5 second delay like Python version
+        }
+
+        function sendQuickQuestion(question) {
+            document.getElementById('messageInput').value = question;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Focus input on load
+        window.onload = function() {
+            document.getElementById('messageInput').focus();
+        };
+    </script>
+</body>
+</html>
