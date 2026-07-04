@@ -60,7 +60,7 @@ Web Dashboard (Flask + SocketIO + Real-time Updates) → Application Layer (Arti
 • Training Accuracy: 100%
 • Auto-retraining: Every 5 new classifications`,
     techStack: ['PyTorch', 'Flask', 'SocketIO', 'spaCy', 'TF-IDF', 'scikit-learn', 'APScheduler', 'pandas'],
-    image: 'https://raw.githubusercontent.com/ayushkul172/Energyconsultant/main/AI%20tool%20analysis.jpg',
+    image: 'https://raw.githubusercontent.com/ayushkul172/ayushkul172-Energyconsultant/main/AI%20tool%20analysis.jpg',
     results: [
       { metric: '3.65M', description: 'PyTorch neural network parameters with self-learning capability.' },
       { metric: '100%', description: 'Training accuracy — 552 samples, 6700 epochs, model v130.' },
@@ -76,7 +76,7 @@ Web Dashboard (Flask + SocketIO + Real-time Updates) → Application Layer (Arti
     action:
       'Built the Upstream AI Analyzer, a full-featured Python desktop application. The tool\'s workflow involves a user selecting a date range, which triggers automated web scraping of news articles. Each article is processed through a custom NLP extraction pipeline to pull over 14 categories of information, including field names, companies, contract types, and budget values. The structured results are rendered in a dynamic, graphical dashboard.',
     techStack: ['PyQt5', 'Selenium', 'spaCy', 'Regex', 'Matplotlib', 'Python'],
-    image: 'https://raw.githubusercontent.com/ayushkul172/Energyconsultant/main/AI%20tool%20analysis.jpg',
+    image: 'https://raw.githubusercontent.com/ayushkul172/ayushkul172-Energyconsultant/main/AI%20tool%20analysis.jpg',
     results: [
       { metric: '90%', description: 'Reduction in manual analysis time for upstream analysts.' },
       { metric: '100%', description: 'Automation of intelligence gathering from unstructured news.' },
@@ -92,7 +92,7 @@ Web Dashboard (Flask + SocketIO + Real-time Updates) → Application Layer (Arti
     action:
       'Built the Upstream Data Matcher, a Python desktop application that combines multiple data matching algorithms (fuzzy, semantic, cosine similarity) with AI-powered features. The tool uses NLP and machine learning to intelligently analyze and compare datasets, automatically identifies matches, improves accuracy with user feedback, and allows users to train a Random Forest model to enhance future predictions.',
     techStack: ['tkinter', 'pandas', 'fuzzywuzzy', 'spaCy', 'sklearn', 'threading'],
-    image: 'https://raw.githubusercontent.com/ayushkul172/Energyconsultant/main/AI%20matching%20tool.png',
+    image: 'https://raw.githubusercontent.com/ayushkul172/ayushkul172-Energyconsultant/main/AI%20matching%20tool.png',
     results: [
       { metric: '95%', description: 'Improvement in data matching accuracy with AI-powered algorithms.' },
       { metric: '80%', description: 'Reduction in manual data reconciliation time for upstream teams.' },
@@ -124,7 +124,7 @@ Web Dashboard (Flask + SocketIO + Real-time Updates) → Application Layer (Arti
     action:
       "Developed the 'Project Command Center,' a comprehensive solution featuring a dynamic task table with Excel integration. Key innovations include an AI-powered observation module using NLP to summarize workloads, a machine learning model to predict task completion, and a linear programming engine to optimize resource allocation. The platform includes an interactive visualization panel with customizable charts and advanced filtering.",
     techStack: ['Python', 'PyQt5', 'Pandas', 'Scikit-learn', 'Matplotlib', 'SciPy'],
-    image: 'https://raw.githubusercontent.com/ayushkul172/Energyconsultant/main/Project%20tool.png',
+    image: 'https://raw.githubusercontent.com/ayushkul172/ayushkul172-Energyconsultant/main/Project%20tool.png',
     results: [
       { metric: 'AI-Driven', description: 'Insights that predict delays & optimize team workload allocation.' },
       { metric: '100%', description: 'Centralized visibility into all tasks and sub-tasks in real-time.' },
