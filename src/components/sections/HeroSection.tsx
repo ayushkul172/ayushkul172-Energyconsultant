@@ -28,7 +28,7 @@ import { smoothScrollTo } from '@/utils/smoothScroll';
 const HERO_NAME = 'Ayush Kulshrestha';
 const ROTATING_TITLES = ['Energy Data Analyst', 'AI Consultant', 'Automation Expert'];
 const PROFILE_IMAGE_URL =
-  'https://raw.githubusercontent.com/ayushkul172/Energyconsultant/main/Ayushprofile.png';
+  'https://github.com/ayushkul172/ayushkul172-Energyconsultant/blob/main/Ayushprofile.png';
 
 const TITLE_CYCLE_INTERVAL = 3000; // 3 seconds
 const CROSSFADE_DURATION = 500; // 500ms
