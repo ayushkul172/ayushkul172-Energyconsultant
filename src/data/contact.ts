@@ -25,12 +25,13 @@ export const contactMethods: ContactMethod[] = [
     icon: 'fa-brands fa-linkedin',
     accentColor: 'from-blue-600 to-indigo-600',
   },
-  {
+ {
     type: 'website',
     label: 'Download CV',
-    value: 'Ayush_Kulshrestha_CV.pdf',
-    href: '/cv/Ayush_Kulshrestha_CV.pdf',
+    value: 'Ayush_Kulshrestha_Resume.pdf',
+    href: 'https://raw.githubusercontent.com/ayushkul172/ayushkul172-Energyconsultant/main/Resume%20(8).pdf',
     icon: 'fa-solid fa-file-arrow-down',
     accentColor: 'from-orange-500 to-red-500',
-  },
+},
+
 ];
