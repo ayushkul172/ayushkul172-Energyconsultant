@@ -28,10 +28,10 @@ export const contactMethods: ContactMethod[] = [
  {
     type: 'website',
     label: 'Download CV',
-    value: 'Ayush_Kulshrestha_Resume.pdf',
-    href: 'https://raw.githubusercontent.com/ayushkul172/ayushkul172-Energyconsultant/main/Resume%20(8).pdf',
+    value: 'Ayush Kulshrestha - CV.pdf',
+    href: 'https://raw.githubusercontent.com/ayushkul172/ayushkul172-Energyconsultant/main/Ayush%20Kulshrestha%20-%20CV.pdf',
     icon: 'fa-solid fa-file-arrow-down',
     accentColor: 'from-orange-500 to-red-500',
-},
+  },
 
 ];
