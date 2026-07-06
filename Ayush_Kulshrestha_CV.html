@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayush Kulshrestha - CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', Calibri, 'Segoe UI', sans-serif;
+            font-size: 10.5pt;
+            line-height: 1.6;
+            color: #000000;
+            background: #0f172a;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Download Button */
+        .download-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(15, 23, 42, 0.97);
+            backdrop-filter: blur(12px);
+            padding: 14px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            border-bottom: 1px solid rgba(58, 143, 212, 0.2);
+        }
+        .download-bar button {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: #fff;
+            border: none;
+            padding: 11px 36px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            border-radius: 6px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+        }
+        .download-bar button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.45);
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+
+        /* Page */
+        .page {
+            max-width: 870px;
+            margin: 70px auto 40px;
+            background: #fff;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0a1628 0%, #132f4c 40%, #1b4a7a 70%, #2a6db5 100%);
+            padding: 45px 55px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(58,143,212,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; left: 30%;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(58,143,212,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header-left {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+        .header-left h1 {
+            font-size: 28pt;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .header-left .tagline {
+            font-size: 10.5pt;
+            color: #93c5fd;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+        .header-left .contact {
+            font-size: 10pt;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.9;
+        }
+        .header-left .contact a {
+            color: #8dc8ff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .header-left .contact a:hover {
+            color: #fff;
+        }
+        .header-photo {
+            width: 115px;
+            height: 135px;
+            object-fit: cover;
+            border: 3px solid rgba(141, 200, 255, 0.6);
+            margin-left: 25px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            border-radius: 4px;
+        }
+
+        /* Key Stats Bar */
+        .stats-bar {
+            background: #f0f7ff;
+            border-bottom: 1px solid #d4e6f7;
+            padding: 16px 55px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-item .stat-number {
+            font-size: 18pt;
+            font-weight: 700;
+            color: #1b3a5c;
+            display: block;
+            line-height: 1.2;
+        }
+        .stat-item .stat-label {
+            font-size: 8.5pt;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .stat-divider {
+            width: 1px;
+            height: 35px;
+            background: #d4e6f7;
+        }
+
+        /* Body Content */
+        .body-content {
+            padding: 32px 55px 50px;
+        }
+
+        /* Section Headings */
+        .section-heading {
+            font-size: 11pt;
+            font-weight: 700;
+            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 30px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1.5px solid #e2e8f0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -1.5px;
+            left: 0;
+            width: 55px;
+            height: 1.5px;
+            background: #2563eb;
+        }
+        .section-heading .icon {
+            font-size: 13pt;
+        }
+
+        /* Objective */
+        .objective {
+            font-size: 10.5pt;
+            text-align: justify;
+            color: #000;
+            padding: 15px 18px;
+            background: linear-gradient(135deg, #f8fbff 0%, #eef5fc 100%);
+            border-left: 4px solid #3a8fd4;
+            border-radius: 0 6px 6px 0;
+            margin-top: 5px;
+            box-shadow: 0 2px 8px rgba(58,143,212,0.08);
+        }
+        .portfolio-line {
+            font-size: 10pt;
+            margin-top: 10px;
+            color: #111;
+        }
+        .portfolio-line a {
+            color: #1b6bb5;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px dashed #1b6bb5;
+            transition: all 0.2s;
+        }
+        .portfolio-line a:hover {
+            color: #3a8fd4;
+            border-bottom-style: solid;
+        }
+        .edu-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+        }
+        .edu-table td {
+            padding: 8px 12px;
+            font-size: 10.5pt;
+            vertical-align: top;
+        }
+        .edu-table tr {
+            border-bottom: 1px solid #eef2f6;
+        }
+        .edu-table tr:hover {
+            background: #f8fbff;
+        }
+        .edu-table .degree {
+            font-weight: 700;
+            color: #1b3a5c;
+            width: 38%;
+        }
+        .edu-table .school {
+            width: 40%;
+            color: #111;
+        }
+        .edu-table .year {
+            text-align: right;
+            font-weight: 700;
+            width: 22%;
+            color: #3a8fd4;
+        }
+
+        /* Job Header */
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 3px;
+            padding: 8px 14px;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f2fc 100%);
+            border-radius: 6px;
+            border: 1px solid #d4e6f7;
+        }
+        .job-company {
+            font-size: 12pt;
+            font-weight: 700;
+            color: #1b3a5c;
+        }
+        .job-date {
+            font-size: 9.5pt;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #1b3a5c, #2a6db5);
+            padding: 4px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        .job-role {
+            font-size: 10.5pt;
+            font-weight: 600;
+            color: #3a8fd4;
+            margin: 4px 0 10px 14px;
+            font-style: italic;
+        }
+
+        /* Sub-category within job */
+        .job-category {
+            font-size: 9.5pt;
+            font-weight: 700;
+            color: #1b3a5c;
+            margin: 14px 0 6px;
+            padding: 4px 12px;
+            background: linear-gradient(90deg, #e8f2fc, #f8fbff);
+            border-left: 3px solid #3a8fd4;
+            display: inline-block;
+            border-radius: 0 4px 4px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Bullet Lists */
+        ul.bullets {
+            margin: 5px 0 8px 22px;
+        }
+        ul.bullets li {
+            font-size: 10.5pt;
+            margin-bottom: 5px;
+            text-align: justify;
+            color: #000;
+            padding-left: 4px;
+        }
+        ul.bullets li::marker {
+            color: #3a8fd4;
+            font-size: 12pt;
+        }
+
+        /* Project Boxes */
+        .project-box {
+            background: #fff;
+            border: 1px solid #d4e6f7;
+            border-left: 5px solid;
+            border-image: linear-gradient(180deg, #1b3a5c, #3a8fd4) 1;
+            padding: 18px 22px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 3px 12px rgba(58,143,212,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .project-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #1b3a5c, #3a8fd4, #8dc8ff);
+        }
+        .project-box h4 {
+            font-size: 11pt;
+            font-weight: 700;
+            color: #1b3a5c;
+            margin-bottom: 4px;
+        }
+        .project-box .tech-line {
+            font-size: 9.5pt;
+            color: #fff;
+            background: linear-gradient(90deg, #1b3a5c, #2a6db5);
+            padding: 3px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .project-box p {
+            font-size: 10.5pt;
+            margin-bottom: 5px;
+            color: #000;
+        }
+        .project-box ul {
+            margin: 5px 0 8px 20px;
+            font-size: 10pt;
+        }
+        .project-box ul li {
+            margin-bottom: 3px;
+            color: #111;
+        }
+        .project-box ul li::marker {
+            color: #3a8fd4;
+        }
+        .project-box .impact {
+            font-weight: 700;
+            color: #0d6e3a;
+            font-size: 10.5pt;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #e6f9ef, #d1f5e0);
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 6px;
+            border: 1px solid #b8e8cc;
+        }
+        .project-box .link-line {
+            font-size: 9.5pt;
+            margin-top: 8px;
+        }
+        .project-box .link-line a {
+            color: #1b6bb5;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 3px 10px;
+            border: 1px solid #3a8fd4;
+            border-radius: 20px;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+        .project-box .link-line a:hover {
+            background: #3a8fd4;
+            color: #fff;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .skill-pill {
+            padding: 8px 14px;
+            background: #f8fbff;
+            border: 1px solid #d4e6f7;
+            border-radius: 6px;
+            font-size: 10pt;
+            transition: all 0.2s;
+        }
+        .skill-pill:hover {
+            border-color: #3a8fd4;
+            box-shadow: 0 2px 8px rgba(58,143,212,0.12);
+        }
+        .skill-pill strong {
+            color: #1b3a5c;
+            display: block;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .skill-pill span {
+            color: #111;
+            font-size: 10pt;
+        }
+
+        /* Certifications */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin: 10px 0;
+        }
+        .cert-item {
+            font-size: 10pt;
+            padding: 6px 12px;
+            background: #f8fbff;
+            border: 1px solid #e8f0f7;
+            border-radius: 4px;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cert-item::before {
+            content: '✓';
+            color: #3a8fd4;
+            font-weight: 700;
+            font-size: 11pt;
+        }
+
+        .languages-bar {
+            margin-top: 20px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #f0f7ff, #e8f2fc);
+            border-radius: 6px;
+            text-align: center;
+            font-size: 10.5pt;
+            color: #1b3a5c;
+            font-weight: 600;
+            border: 1px solid #d4e6f7;
+        }
+
+        /* Print */
+        @media print {
+            .download-bar { display: none !important; }
+            body { background: #fff; }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                max-width: 100%;
+                border-radius: 0;
+            }
+            .header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 35px 45px 30px;
+            }
+            .stats-bar {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .body-content {
+                padding: 25px 45px 35px;
+            }
+            .project-box { break-inside: avoid; }
+            .job-date, .project-box .tech-line {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="download-bar">
+    <button onclick="downloadPDF()">&#11015; DOWNLOAD AS PDF</button>
+</div>
+
+<div class="page">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <h1>AYUSH KULSHRESTHA</h1>
+            <div class="tagline">Upstream Energy & AI Professional | Subsea Intelligence | ML Engineering</div>
+            <div class="contact">
+                <a href="mailto:ayushkul404@yahoo.com">ayushkul404@yahoo.com</a> &nbsp;|&nbsp; +91 8826206605 &nbsp;|&nbsp; <a href="https://www.ayushenergyconsultant.com/" target="_blank"><strong>www.ayushenergyconsultant.com</strong></a><br>
+                <a href="https://linkedin.com/in/ayush-kulshrestha-3342953b9" target="_blank">LinkedIn</a> &nbsp;|&nbsp; <a href="https://github.com/ayushkul172" target="_blank">GitHub</a>
+            </div>
+        </div>
+        <img src="Ayush.png" alt="Ayush Kulshrestha" class="header-photo">
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-number">6+</span>
+            <span class="stat-label">Years Experience</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-number">98%</span>
+            <span class="stat-label">ML Accuracy</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-number">90%</span>
+            <span class="stat-label">Process Reduction</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-number">1000+</span>
+            <span class="stat-label">Assets Managed</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-number">$2-5M</span>
+            <span class="stat-label">Client Savings</span>
+        </div>
+    </div>
+
+    <div class="body-content">
+
+    <!-- Objective -->
+    <div class="section-heading"><span class="icon">🎯</span> Objective</div>
+    <p class="objective">
+        Upstream Energy & AI Professional with 6+ years at Wood Mackenzie and KPMG, combining deep subsea production expertise (Christmas Trees, SURF systems, FPSOs, manifolds, topsides, wellheads) with hands-on AI/ML engineering. Built production-grade ML systems (PyTorch, 3.5M parameters, 98% accuracy) that automate upstream contract intelligence, and Python automation pipelines that reduced manual processes by 90%. Expert in subsea contract lifecycle tracking (Concept &rarr; Pre-FEED &rarr; FEED &rarr; EPC &rarr; Installation &rarr; Hook-up & Commissioning), upstream production databases, and AI-driven market forecasting. Seeking hybrid roles at the intersection of upstream oil & gas strategy and applied AI/ML.
+    </p>
+    <div class="portfolio-line" style="margin-top: 14px; padding: 12px 20px; background: linear-gradient(135deg, #0f172a, #1b4a7a); border-radius: 6px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(27,74,122,0.3); -webkit-print-color-adjust: exact; print-color-adjust: exact;">
+        <span style="font-size: 14pt;">🌐</span>
+        <span style="color: #93c5fd; font-size: 10pt; font-weight: 500;">Explore more on my portfolio</span>
+        <a href="https://www.ayushenergyconsultant.com/" target="_blank" style="color: #fff; font-weight: 700; font-size: 10.5pt; text-decoration: none; padding: 5px 16px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 20px; transition: all 0.3s; box-shadow: 0 2px 8px rgba(59,130,246,0.4); -webkit-print-color-adjust: exact; print-color-adjust: exact;">www.ayushenergyconsultant.com &rarr;</a>
+    </div>
+
+    <!-- Education -->
+    <div class="section-heading"><span class="icon">🎓</span> Education</div>
+    <table class="edu-table">
+        <tr>
+            <td class="degree">MBA (Marketing and International Business)</td>
+            <td class="school">Galgotias College of Engineering & Technology</td>
+            <td class="year">2018 - 2020</td>
+        </tr>
+        <tr>
+            <td class="degree">B. Tech (Mechanical Engineering)</td>
+            <td class="school">Maharshi Dayanand University</td>
+            <td class="year">2013 - 2017</td>
+        </tr>
+    </table>
+
+    <!-- Work Experience -->
+    <div class="section-heading"><span class="icon">💼</span> Work Experience</div>
+
+    <!-- Wood Mackenzie -->
+    <div class="job-header">
+        <span class="job-company">Wood Mackenzie, Gurugram</span>
+        <span class="job-date">2024 - Present</span>
+    </div>
+    <div class="job-role">Upstream Production Analyst & AI Developer (Oil & Gas)</div>
+
+    <div class="job-category">Subsea Intelligence & Contract Tracking</div>
+    <ul class="bullets">
+        <li>Tracks 500+ subsea contracts across full lifecycle (Concept &rarr; Pre-FEED &rarr; FEED &rarr; EPC &rarr; Installation &rarr; Hook-up & Commissioning &rarr; O&M &rarr; Decommissioning) covering Christmas Trees, SURF packages, manifolds, FPSOs, jackets, topsides, and pipelines across global deepwater basins.</li>
+        <li>Executes quarterly analyses of SURF contract awards, Christmas Tree procurement, and manifold installations &mdash; translating complex subsea intelligence into actionable advisory deliverables for C-suite decision-makers.</li>
+        <li>Managed the global rig and USC (Upstream Supply Chain) database covering 1,000+ active drilling assets and subsea infrastructure (FPSOs, jackets, pipelines, wellheads) &mdash; providing clients with real-time intelligence on rig availability, dayrates, contract status, and EPC award pipelines.</li>
+        <li>Advised E&P operators on optimal contract timing by analyzing historical EPC award patterns, vessel availability, and yard capacity &mdash; saving clients an estimated $2-5M per project in avoided schedule overruns.</li>
+    </ul>
+
+    <div class="job-category">AI/ML & Automation</div>
+    <ul class="bullets">
+        <li>Deployed AI-driven anomaly detection across subsea contract datasets &mdash; flagging data inconsistencies and market shifts 2 weeks ahead of manual review cycles, enabling proactive client alerts on SURF award pipeline changes.</li>
+        <li>Designed and implemented Python automation pipelines replacing 40+ hours/week of manual data processing &mdash; reducing report delivery time from 2 weeks to 2 days (90% reduction) and freeing analysts for higher-value client advisory work.</li>
+        <li>Built autonomous ML-powered contract classification system processing 2,800+ articles weekly with 98% accuracy &mdash; ensuring zero missed high-priority EPC/FEED awards worth $100M+.</li>
+        <li>Re-architected data delivery workflows with self-service dashboards for on-demand market views, reducing manual touchpoints by 60% and cutting ad-hoc request volume by half.</li>
+    </ul>
+
+    <div class="job-category">Client Advisory</div>
+    <ul class="bullets">
+        <li>Coordinates primary research across 6 global offices and clients to close critical data gaps &mdash; delivering consulting-grade upstream intelligence that directly feeds into client strategy.</li>
+        <li>Served as first point of escalation for strategic accounts, resolving data discrepancies within 24-hour SLAs and maintaining 98%+ client satisfaction across quarterly engagement reviews.</li>
+        <li>Partnered with senior consultants to structure client deliverables on subsea market outlook, contract benchmarking, and equipment demand forecasting.</li>
+    </ul>
+
+    <!-- AI Projects -->
+    <div class="project-box">
+        <h4>🚀 Engineered a full-stack analytics platform revolutionizing offshore drilling decision-making:</h4>
+        <div class="tech-line">Python (7,000+ lines) | Streamlit | ML | Monte Carlo | NLP</div>
+        <p><strong>Challenge:</strong> Oil & gas operators lacked integrated intelligence systems for rig efficiency analysis and climate risk assessment, leading to $2-5M cost overruns per project.</p>
+        <p><strong>Solution:</strong> Built enterprise-grade Streamlit app with 15+ AI modules:</p>
+        <ul>
+            <li>Climate intelligence engine covering 30+ regions</li>
+            <li>ML-based rig-well matching algorithm (95% accuracy)</li>
+            <li>Monte Carlo simulators for project risk quantification</li>
+            <li>NLP chatbot for natural language data queries</li>
+            <li>Real-time efficiency scoring with anomaly detection</li>
+            <li>50+ interactive dashboards for contract negotiations</li>
+        </ul>
+        <p class="impact">&#10003; Impact: Slashed contractor evaluation time from 8 hours to 15 minutes</p>
+        <p class="link-line"><a href="https://rogtooleffeciency.streamlit.app/" target="_blank">&#9654; Live Demo</a></p>
+    </div>
+
+    <div class="project-box">
+        <h4>🤖 Built an AI-powered contract intelligence agent for upstream news monitoring:</h4>
+        <div class="tech-line">PyTorch (3.5M params) | Flask + SocketIO | TextRank | Regex+ML</div>
+        <p><strong>Challenge:</strong> Upstream analysts manually review 2,800+ articles weekly for contract opportunities &mdash; spending 15+ hours on classification with risk of missed high-priority EPC/FEED awards worth $100M+.</p>
+        <p><strong>Solution:</strong> Built production-ready Python application (10,000+ lines):</p>
+        <ul>
+            <li>PyTorch neural network classifier (3.5M parameters, 98% accuracy)</li>
+            <li>Hybrid regex+ML contract detection engine</li>
+            <li>Autonomous background agent with desktop alerts</li>
+            <li>TextRank extractive summarization</li>
+            <li>Flask + SocketIO real-time dashboard with keyboard-driven workflow</li>
+        </ul>
+        <p class="impact">&#10003; Impact: 70% time reduction | 169 companies tracked | Zero missed contracts</p>
+        <p class="link-line"><a href="https://github.com/ayushkul172/USC-TOO-AGENT" target="_blank">&#9654; GitHub Repo</a></p>
+    </div>
+
+    <!-- KPMG -->
+    <div class="job-header">
+        <span class="job-company">KPMG Global Services, Gurugram</span>
+        <span class="job-date">2022 - 2024</span>
+    </div>
+    <div class="job-role">Business Associate (Energy & Natural Resources, Auto and IM)</div>
+    <ul class="bullets">
+        <li>Crafted visually engaging Power BI dashboards, transforming complex data into actionable insights to support strategic decision-making within the Energy and Natural Resources (ENR) sector.</li>
+        <li>Conducted thorough data analysis by utilizing VBA and Python for querying and data cleaning, ensuring data accuracy and facilitating informed decision-making processes.</li>
+        <li>Applied expertise in pricing and strategy, including market share analysis, price evaluation, and peer comparison, to inform pricing strategies for ENR clients and optimize their market positioning.</li>
+        <li>Led benchmarking initiatives to provide comprehensive insights into industry rates and pricing dynamics, aligning service rates with industry standards and enhancing competitiveness.</li>
+        <li>Leveraged advanced statistical and text mining techniques to extract actionable insights from large datasets, driving informed decision-making and business impact.</li>
+        <li>Utilized Python and VBA for data manipulation and analysis, automating processes to improve efficiency and enhance modeling accuracy.</li>
+        <li>Applied agile methodologies to identify and implement technology solutions, driving efficiency and innovation in data management processes within the ENR sector.</li>
+    </ul>
+
+    <div class="project-box">
+        <h4>⚡ Generative AI Research Automation:</h4>
+        <div class="tech-line">Excel VBA | Generative AI API Integration</div>
+        <p><strong>Situation:</strong> Team was struggling with manually gathering data for secondary research projects, leading to inefficiencies and errors.</p>
+        <p><strong>Task:</strong> Find a solution to streamline data gathering, reduce time on manual research, and improve accuracy.</p>
+        <p><strong>Action:</strong> Developed an Excel VBA macro integrated with a cutting-edge generative AI tool, automating a significant portion of the secondary research process.</p>
+        <p class="impact">&#10003; Result: Marked reduction in data gathering time, enhanced accuracy, and more efficient research process.</p>
+    </div>
+
+    <!-- ACS -->
+    <div class="job-header">
+        <span class="job-company">ACS Global Tech Solutions, Noida</span>
+        <span class="job-date">2020 - 2022</span>
+    </div>
+    <div class="job-role">Market Research Associate (Information Technology in Industrial Manufacturing)</div>
+    <ul class="bullets">
+        <li>Market Analysis and Strategy Development: Proficient in understanding market dynamics, competitor landscape, and industry trends to inform strategic decision-making.</li>
+        <li>Competitive and Trend Analysis: Conducts competitive and trend analysis to provide actionable insights, translating key trends into strategic recommendations.</li>
+        <li>Product Mapping and Competitor Performance Tracking: Focuses on understanding market positioning and identifying areas for strategic improvement.</li>
+        <li>Content Creation and Thought Leadership: Showcases manufacturing expertise through authored blogs on digital manufacturing technologies.</li>
+        <li>Utilization of Databases and Market-Related Product Data: Proficient in using databases for information gathering and market analysis.</li>
+    </ul>
+
+    <!-- Continental -->
+    <div class="job-header">
+        <span class="job-company">Continental Automotive Components, Gurugram</span>
+        <span class="job-date">2019</span>
+    </div>
+    <div class="job-role">Trainee</div>
+    <ul class="bullets">
+        <li>Gained insights into the operation and functions of cluster units.</li>
+        <li>Acquired knowledge of cluster unit manufacturing processes.</li>
+        <li>Learned about quality control procedures for cluster units.</li>
+    </ul>
+
+    <!-- Technical Skills & Certifications -->
+    <div class="section-heading"><span class="icon">⚙️</span> Technical Skills & Certifications</div>
+    
+    <table style="width:100%; border-collapse:collapse; margin:10px 0;">
+        <tr>
+            <td style="padding:8px 14px; font-size:10pt; font-weight:700; color:#0f172a; width:150px; vertical-align:top; border-bottom:1px solid #e2e8f0;">AI / Machine Learning</td>
+            <td style="padding:8px 14px; font-size:10pt; color:#000; border-bottom:1px solid #e2e8f0;">PyTorch (3.5M parameters), Neural Networks, NLP (TextRank, Classification), Monte Carlo Simulation, Anomaly Detection, Generative AI, Feature Engineering, Model Training & Deployment, scikit-learn &mdash; 98% classification accuracy</td>
+        </tr>
+        <tr>
+            <td style="padding:8px 14px; font-size:10pt; font-weight:700; color:#0f172a; vertical-align:top; border-bottom:1px solid #e2e8f0;">Programming</td>
+            <td style="padding:8px 14px; font-size:10pt; color:#000; border-bottom:1px solid #e2e8f0;">Python (10,000+ lines production code), VBA, Flask, Streamlit, SocketIO, SQL, Pandas, NumPy, Data Pipelines, ETL</td>
+        </tr>
+        <tr>
+            <td style="padding:8px 14px; font-size:10pt; font-weight:700; color:#0f172a; vertical-align:top; border-bottom:1px solid #e2e8f0;">Upstream Domain</td>
+            <td style="padding:8px 14px; font-size:10pt; color:#000; border-bottom:1px solid #e2e8f0;">SURF Systems, Christmas Trees, Manifolds, FPSOs, FLNGs, FSRUs, Wellheads, Topsides, Jackets, Subsea Controls, Contract Lifecycle (Concept &rarr; Decommissioning), EPC Tracking</td>
+        </tr>
+        <tr>
+            <td style="padding:8px 14px; font-size:10pt; font-weight:700; color:#0f172a; vertical-align:top; border-bottom:1px solid #e2e8f0;">Data & BI</td>
+            <td style="padding:8px 14px; font-size:10pt; color:#000; border-bottom:1px solid #e2e8f0;">Power BI, Excel Dashboards, Google Analytics, Microsoft Office (Excel, PowerPoint, Word), Statistical Analysis, Data Modeling, Tableau</td>
+        </tr>
+        <tr>
+            <td style="padding:8px 14px; font-size:10pt; font-weight:700; color:#0f172a; vertical-align:top; border-bottom:1px solid #e2e8f0;">Energy Databases</td>
+            <td style="padding:8px 14px; font-size:10pt; color:#000; border-bottom:1px solid #e2e8f0;">Refinitiv, FactSet, Bloomberg, GlobalData, Zoominfo</td>
+        </tr>
+        <tr>
+            <td style="padding:8px 14px; font-size:10pt; font-weight:700; color:#0f172a; vertical-align:top; border-bottom:1px solid #e2e8f0;">Product & Research</td>
+            <td style="padding:8px 14px; font-size:10pt; color:#000; border-bottom:1px solid #e2e8f0;">Product Roadmap, Stakeholder Management, KPIs, Cross-functional Collaboration, Market Sizing (TAM/SAM/SOM), Competitive Intelligence, Primary & Secondary Research, SWOT Analysis</td>
+        </tr>
+        <tr>
+            <td style="padding:8px 14px; font-size:10pt; font-weight:700; color:#0f172a; vertical-align:top; border-bottom:1px solid #e2e8f0;">Methodologies</td>
+            <td style="padding:8px 14px; font-size:10pt; color:#000; border-bottom:1px solid #e2e8f0;">Lean Six Sigma, Agile, Data Pipeline Architecture, Jira</td>
+        </tr>
+        <tr>
+            <td style="padding:8px 14px; font-size:10pt; font-weight:700; color:#0f172a; vertical-align:top; border-bottom:1px solid #e2e8f0;">Certifications</td>
+            <td style="padding:8px 14px; font-size:10pt; color:#000; border-bottom:1px solid #e2e8f0;">Lean Six Sigma (KPMG) &bull; Fundamentals of Digital Marketing (Google) &bull; Business Analysis: Essential Tools & Techniques (IIBA) &bull; Python Essential Training (LinkedIn Learning) &bull; Digital Economy for Sustainable Growth (ADBI) &bull; Growth & Inclusion in Asia's Cities (ADBI)</td>
+        </tr>
+        <tr>
+            <td style="padding:8px 14px; font-size:10pt; font-weight:700; color:#0f172a; vertical-align:top;">Languages</td>
+            <td style="padding:8px 14px; font-size:10pt; color:#000;">English, Hindi</td>
+        </tr>
+    </table>
+
+    </div>
+</div>
+
+<script>
+function downloadPDF() {
+    document.querySelector('.download-bar').style.display = 'none';
+    window.print();
+    setTimeout(function() {
+        document.querySelector('.download-bar').style.display = 'flex';
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
