@@ -92,6 +92,7 @@ Web Dashboard (Flask + SocketIO + Real-time Updates) → Application Layer (Arti
     accentColor: 'from-indigo-500 to-purple-600',
   },
   {
+    title: 'Upstream AI Analyzer Tool',
     situation:
       'In the upstream oil & gas industry, decision-makers rely on timely insights from news sources. However, manually scanning, extracting, and analyzing key information is tedious, error-prone, and time-consuming, leading to missed updates and difficulties in building structured dashboards.',
     task: 'Design and build a tool that could automatically collect upstream news, extract specific entities (projects, operators, delays), summarize articles, and visually present the analysis in an interactive dashboard—all accessible to non-technical users.',
