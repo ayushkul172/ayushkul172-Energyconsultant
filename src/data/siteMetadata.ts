@@ -27,7 +27,7 @@ export const siteMetadata: SiteMetadata = {
     image:
       'https://raw.githubusercontent.com/ayushkul172/Energyconsultant/main/Ayushprofile.png',
     sameAs: [
-      'https://www.linkedin.com/in/ayush-k-5641461b2/',
+      'https://www.linkedin.com/in/ayush-kulshrestha-2a8014110/',
       'https://www.akenergyconsultant.org/services',
     ],
     email: 'ayushkul404@yahoo.com',
