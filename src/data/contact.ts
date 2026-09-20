@@ -20,8 +20,8 @@ export const contactMethods: ContactMethod[] = [
   {
     type: 'linkedin',
     label: 'LinkedIn',
-    value: 'linkedin.com/in/ayush-k-5641461b2',
-    href: 'https://www.linkedin.com/in/ayush-k-5641461b2/',
+    value: 'linkedin.com/in/ayush-kulshrestha-2a8014110',
+    href: 'https://www.linkedin.com/in/ayush-kulshrestha-2a8014110/',
     icon: 'fa-brands fa-linkedin',
     accentColor: 'from-blue-600 to-indigo-600',
   },
